@@ -1,0 +1,124 @@
+import {
+  compose, slice, head, split, flatten, entries, values, reduce, join,
+} from 'conductor';
+import parse from 'yargs-parser';
+import requireDir from 'require-dir';
+import { parseCommand } from '../utils';
+import eventHub, { ON_COMMAND_END } from '../event-hub';
+import { injectEnvironment, getCurrentEnvironment } from '../environment';
+import internalCommands from './internals';
+import logger from '../logger';
+import * as history from '../history';
+import userConfig from '../config';
+
+let commandsMap = {};
+let helpersMap = {};
+let commands;
+
+export const getCommands = () => commandsMap;
+
+export const runCommand = async (command, internal) => {
+  const parsed = parse(command, { configuration: { 'parse-numbers': false } });
+  let found;
+  let index = 0;
+  for (; index < parsed._.length; index += 1) {
+    found = commandsMap[parsed._.slice(0, index + 1).join(' ')];
+    if (found) {
+      break;
+    }
+  }
+  try {
+    if (!found) {
+      await commandsMap.help.action(parsed, command);
+    } else {
+      await found.action(
+        {
+          ...parsed,
+          // Remove command from args
+          _: parsed._.slice(index + 1),
+        },
+        command,
+      );
+    }
+  } catch (e) {
+    if (!internal) {
+      throw e;
+    }
+    logger.error('Error while executing command', command);
+    logger.error(e.stack);
+  }
+  if (internal) {
+    eventHub.emit(ON_COMMAND_END);
+  }
+};
+
+const getCommandKey = compose(
+  head,
+  slice(-1, Infinity),
+  split('.'),
+);
+
+const getAccKey = compose(
+  join('.'),
+  slice(0, -1),
+  split('.'),
+);
+
+const parseCommands = compose(
+  values,
+  reduce((acc, [key, item]) => {
+    const accKey = getAccKey(key);
+    const commandKey = getCommandKey(key);
+    return {
+      ...acc,
+      [accKey]: {
+        ...acc[accKey],
+        [commandKey]: item,
+      },
+    };
+  }, {}),
+  entries,
+  flatten,
+);
+
+const wrapCommand = (action, config) => (argv, command) => {
+  const env = getCurrentEnvironment();
+  return action({
+    args: argv,
+    commands,
+    ...getHelpers(env),
+    logger,
+    command,
+    history,
+    runCommand,
+    immersiveConfig: config,
+    config: userConfig,
+    env: env ? env.name : null,
+  });
+};
+
+export const loadCommands = ({ helpers = {}, commandsDirectory, ...config }) => {
+  helpersMap = injectEnvironment(config, helpers);
+  const customCommands = parseCommands(requireDir(commandsDirectory, { recurse: true }));
+  commands = [...customCommands, ...internalCommands.slice(config.withEnvironment ? 0 : 1)].map(
+    item => ({
+      ...item,
+      ...parseCommand(item.command),
+      action: wrapCommand(item.action, config),
+    }),
+  );
+  commandsMap = commands.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.cmd]: item,
+    }),
+    {},
+  );
+};
+
+function getHelpers(env) {
+  if (env && env.name) {
+    return helpersMap[env.name];
+  }
+  return helpersMap;
+}

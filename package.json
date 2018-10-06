@@ -1,0 +1,57 @@
+{
+  "name": "immersive",
+  "version": "1.0.0",
+  "description": "A framework to build immersive CLIs",
+  "main": "index.js",
+  "module": "src/main.js",
+  "repository": "https://github.com/MatthieuLemoine/immersive",
+  "author": "MatthieuLemoine",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "cli-table3": "^0.5.1",
+    "conductor": "^1.4.1",
+    "conf": "^2.0.0",
+    "esm": "^3.0.84",
+    "figlet": "^1.2.0",
+    "ramda": "^0.25.0",
+    "require-dir": "^1.1.0",
+    "yargs-parser": "^10.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "husky": "^1.1.1",
+    "jest": "^23.6.0",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3",
+    "prettier-eslint-cli": "^4.7.1"
+  },
+  "scripts": {
+    "test": "./jest.js",
+    "lint": "eslint .",
+    "prettify": "prettier-eslint --write \"**/*.js*\" --list-different",
+    "pretty-check": "prettier-eslint \"**/*.js*\" --list-different",
+    "check-version": "node scripts/check-version.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "*.js": [
+        "prettier-eslint --write --config .prettierrc",
+        "eslint --fix",
+        "git add"
+      ],
+      "*.json": [
+        "prettier-eslint --write --config .prettierrc",
+        "git add"
+      ]
+    }
+  }
+}
