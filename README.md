@@ -1,4 +1,4 @@
-# immersive
+# Immersive [![CircleCI](https://circleci.com/gh/MatthieuLemoine/immersive/tree/master.svg?style=svg)](https://circleci.com/gh/MatthieuLemoine/immersive/tree/master)
 
 A framework to build immersive CLIs & great developer tools.
 

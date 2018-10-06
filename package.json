@@ -1,7 +1,7 @@
 {
   "name": "immersive",
   "version": "1.0.0",
-  "description": "A framework to build immersive CLIs",
+  "description": "A framework to build immersive CLIs & great developer tools.",
   "main": "index.js",
   "module": "src/main.js",
   "repository": "https://github.com/MatthieuLemoine/immersive",
