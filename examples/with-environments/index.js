@@ -3,8 +3,10 @@ const immersive = require('../../');
 const db = require('./helpers/db');
 
 const config = {
-  // A name that will be displayed on CLI start
-  name: 'Environments',
+  // Application name used for config persistence (required)
+  projectName: 'environments',
+  // Will be displayed on CLI start (optional - default to displayName)
+  displayName: 'Environments',
   // Path to the directory where commands are defined (required)
   commandsDirectory: path.join(__dirname, 'commands'),
   // Will be accessible from commands as argument

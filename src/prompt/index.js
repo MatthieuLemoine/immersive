@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import readline from 'readline';
 import eventHub, { ON_COMMAND } from '../event-hub';
 import { getCurrentEnvironment } from '../environment';
-import config from '../config';
+import { getConfig } from '../config';
 import { getNextEntry, getPreviousEntry } from '../history';
 import autocomplete from '../autocomplete';
 
@@ -80,6 +80,7 @@ function replacePrompt(text) {
 }
 
 function getPrefix() {
+  const config = getConfig();
   const colors = config.get('colors');
   const user = config.get('user');
   const symbol = config.get('symbol');

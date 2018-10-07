@@ -9,7 +9,7 @@ import { injectEnvironment, getCurrentEnvironment } from '../environment';
 import internalCommands from './internals';
 import logger from '../logger';
 import * as history from '../history';
-import userConfig from '../config';
+import { getConfig } from '../config';
 
 let commandsMap = {};
 let helpersMap = {};
@@ -92,7 +92,7 @@ const wrapCommand = (action, config) => (argv, command) => {
     history,
     runCommand,
     immersiveConfig: config,
-    config: userConfig,
+    config: getConfig(),
     env: env ? env.name : null,
   });
 };

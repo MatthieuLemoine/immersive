@@ -3,8 +3,10 @@ import immersive from '../..';
 import db from './helpers/db';
 
 const config = {
-  // A name that will be displayed on CLI start
-  name: 'ESM',
+  // Application name used for config persistence (required)
+  projectName: 'esm',
+  // Will be displayed on CLI start (optional - default to displayName)
+  displayName: 'ESM',
   // Path to the directory where commands are defined (required)
   commandsDirectory: path.join(__dirname, 'commands'),
   // Will be accessible from commands as argument

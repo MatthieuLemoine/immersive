@@ -2,7 +2,7 @@ import figlet from 'figlet';
 import {
   compose, converge, isNil, isEmpty, or, not,
 } from 'ramda';
-import { setDefaults } from './config';
+import { loadConfig } from './config';
 import { writeLine, prompt } from './prompt';
 import { runCommand, loadCommands } from './command';
 import eventHub, { ON_COMMAND, ON_COMMAND_END } from './event-hub';
@@ -15,11 +15,19 @@ const isNotEmptyOrNil = compose(
 );
 
 const immersive = (userConfig = {}) => {
-  const { environments, defaultEnvironment, name = 'Immersive' } = userConfig;
+  const {
+    environments, defaultEnvironment, projectName, displayName,
+  } = userConfig;
+  if (!projectName) {
+    throw new Error('projectName is required in immersive options.');
+  }
   const withEnvironment = isNotEmptyOrNil(environments);
   const config = { ...userConfig, withEnvironment };
-  writeLine(figlet.textSync(name));
-  setDefaults(isNotEmptyOrNil(config.defaultConfig) ? config.defaultConfig : undefined);
+  writeLine(figlet.textSync(displayName || projectName));
+  loadConfig({
+    defaults: isNotEmptyOrNil(config.defaultConfig) ? config.defaultConfig : undefined,
+    projectName,
+  });
   if (withEnvironment) {
     config.environments = loadEnvironments(config);
     setCurrentEnvironment(defaultEnvironment || Object.keys(environments)[0]);

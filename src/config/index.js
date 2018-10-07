@@ -1,8 +1,10 @@
 import Conf from 'conf';
 
-const config = new Conf();
+let config;
 
-export const setDefaults = (
+export const getConfig = () => config;
+
+export const loadConfig = ({
   defaults = {
     user: 'immersive',
     symbol: '>',
@@ -10,12 +12,11 @@ export const setDefaults = (
       prompt: 'yellow',
     },
   },
-) => {
-  Object.entries(defaults).forEach(([key, value]) => {
-    if (!config.has(key)) {
-      config.set(key, value);
-    }
+  projectName,
+}) => {
+  config = new Conf({
+    defaults,
+    projectName,
   });
+  return config;
 };
-
-export default config;

@@ -16,8 +16,10 @@ npm install immersive
 import immersive from 'immersive';
 
 const config = {
-  // A name that will be displayed on CLI start (optional)
-  name: 'Immersive',
+  // Application name used for config persistence (required)
+  projectName: 'Immersive',
+  // Will be displayed on CLI start (optional - default to displayName)
+  displayName: 'Immersive',
   // Path to the directory where commands are defined (required)
   commandsDirectory: path.join(__dirname, 'commands'),
   // Will be accessible from commands as argument (optional)
