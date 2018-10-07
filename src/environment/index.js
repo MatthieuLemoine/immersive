@@ -29,6 +29,7 @@ export const injectEnvironment = (config, helpers) => {
 export const getCurrentEnvironment = () => environment;
 export const loadEnvironments = (config) => {
   environments = map((env, key) => ({ ...env, name: key }), config.environments);
+  return environments;
 };
 export const setCurrentEnvironment = (name) => {
   environment = environments[name];

@@ -1,10 +1,7 @@
-module.exports = {
-  command: 'get <id>',
-  description: 'Get user info',
-  action,
-};
+export const command = 'get <id>';
+export const description = 'Get user info';
 
-async function action({ args, db, logger }) {
+export const action = async ({ args, db, logger }) => {
   const id = args._[0];
   const user = await db.get(id);
   if (!user) {
@@ -12,4 +9,4 @@ async function action({ args, db, logger }) {
     return;
   }
   logger.table({ name: 'Users', rows: [user] });
-}
+};

@@ -22,7 +22,7 @@ export const immersive = (userConfig = {}) => {
   writeLine(figlet.textSync(name));
   setDefaults(isNotEmptyOrNil(config.defaultConfig) ? config.defaultConfig : undefined);
   if (withEnvironment) {
-    loadEnvironments(config);
+    config.environments = loadEnvironments(config);
     setCurrentEnvironment(defaultEnvironment || Object.keys(environments)[0]);
   }
   loadCommands(config);
