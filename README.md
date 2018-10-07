@@ -2,6 +2,20 @@
 
 A framework to build immersive CLIs & great developer tools.
 
+## Features
+
+- [Customization](https://github.com/MatthieuLemoine/immersive/wiki/Configuration#customization)
+- [Configuration persistence](https://github.com/MatthieuLemoine/immersive/wiki/Configuration)
+- [Auto loading of commands](https://github.com/MatthieuLemoine/immersive/wiki/Commands#commands-directory)
+- [Autocomplete](https://github.com/MatthieuLemoine/immersive/wiki/Commands#autocomplete)
+- [Command history](https://github.com/MatthieuLemoine/immersive/wiki/Commands#history)
+- [Async commands support](https://github.com/MatthieuLemoine/immersive/wiki/Commands#example)
+- [Enhanced context for commands](https://github.com/MatthieuLemoine/immersive/wiki/Commands#enhanced-context)
+- [Environments management](https://github.com/MatthieuLemoine/immersive/wiki/Environments)
+- [Enhanced REPL](https://github.com/MatthieuLemoine/immersive/wiki/REPL)
+- [Display tabular data](https://github.com/MatthieuLemoine/immersive/wiki/Logger#table)
+- [Help command](https://github.com/MatthieuLemoine/immersive/wiki/Commands#built-in-commands)
+
 ## Install
 
 ```
@@ -49,20 +63,6 @@ const config = {
 
 immersive(config);
 ```
-
-## Features
-
-- Customization
-- Config persistence
-- Auto loading of commands
-- Autocomplete
-- Command history
-- Async commands support
-- Enhanced context for commands
-- Environments management
-- Enhanced REPL
-- Display tables
-- Help command
 
 ## Inspiration
 
