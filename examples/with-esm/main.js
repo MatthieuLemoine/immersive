@@ -1,10 +1,10 @@
-const path = require('path');
-const immersive = require('../../');
-const db = require('./helpers/db');
+import path from 'path';
+import immersive from '../..';
+import db from './helpers/db';
 
 const config = {
   // A name that will be displayed on CLI start
-  name: 'Environments',
+  name: 'ESM',
   // Path to the directory where commands are defined (required)
   commandsDirectory: path.join(__dirname, 'commands'),
   // Will be accessible from commands as argument
@@ -23,7 +23,7 @@ const config = {
   // Default cli config
   defaultConfig: {
     // Displayed in prompt
-    user: 'john',
+    user: 'esm',
     // Displayed in prompt
     symbol: '>',
     colors: {

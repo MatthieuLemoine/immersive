@@ -7,15 +7,14 @@ import { writeLine, prompt } from './prompt';
 import { runCommand, loadCommands } from './command';
 import eventHub, { ON_COMMAND, ON_COMMAND_END } from './event-hub';
 import { setCurrentEnvironment, loadEnvironments } from './environment';
-
-export { mergeExport } from './utils';
+import { mergeExport as merge } from './utils';
 
 const isNotEmptyOrNil = compose(
   not,
   converge(or, [isNil, isEmpty]),
 );
 
-export const immersive = (userConfig = {}) => {
+const immersive = (userConfig = {}) => {
   const { environments, defaultEnvironment, name = 'Immersive' } = userConfig;
   const withEnvironment = isNotEmptyOrNil(environments);
   const config = { ...userConfig, withEnvironment };
@@ -30,3 +29,7 @@ export const immersive = (userConfig = {}) => {
   eventHub.on(ON_COMMAND_END, () => prompt());
   prompt();
 };
+
+export const mergeExport = merge;
+export default immersive;
+module.exports = merge(immersive)({ mergeExport: merge });

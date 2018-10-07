@@ -1,5 +1,5 @@
 const path = require('path');
-const { immersive } = require('../../');
+const immersive = require('../../');
 const db = require('./helpers/db');
 
 const config = {
