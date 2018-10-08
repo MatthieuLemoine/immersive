@@ -16,7 +16,10 @@ const isNotEmptyOrNil = compose(
 
 const immersive = (userConfig = {}) => {
   const {
-    environments, defaultEnvironment, projectName, displayName,
+    environments,
+    defaultEnvironment,
+    projectName,
+    displayName,
   } = userConfig;
   if (!projectName) {
     throw new Error('projectName is required in immersive options.');
@@ -25,7 +28,9 @@ const immersive = (userConfig = {}) => {
   const config = { ...userConfig, withEnvironment };
   writeLine(figlet.textSync(displayName || projectName));
   loadConfig({
-    defaults: isNotEmptyOrNil(config.defaultConfig) ? config.defaultConfig : undefined,
+    defaults: isNotEmptyOrNil(config.defaultConfig)
+      ? config.defaultConfig
+      : undefined,
     projectName,
   });
   if (withEnvironment) {

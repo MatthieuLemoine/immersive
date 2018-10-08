@@ -1,5 +1,13 @@
 import {
-  compose, slice, head, split, flatten, entries, values, reduce, join,
+  compose,
+  slice,
+  head,
+  split,
+  flatten,
+  entries,
+  values,
+  reduce,
+  join,
 } from 'conductor';
 import parse from 'yargs-parser';
 import requireDir from 'require-dir';
@@ -97,16 +105,23 @@ const wrapCommand = (action, config) => (argv, command) => {
   });
 };
 
-export const loadCommands = ({ helpers = {}, commandsDirectory, ...config }) => {
+export const loadCommands = ({
+  helpers = {},
+  commandsDirectory,
+  ...config
+}) => {
   helpersMap = injectEnvironment(config, helpers);
-  const customCommands = parseCommands(requireDir(commandsDirectory, { recurse: true }));
-  commands = [...customCommands, ...internalCommands.slice(config.withEnvironment ? 0 : 1)].map(
-    item => ({
-      ...item,
-      ...parseCommand(item.command),
-      action: wrapCommand(item.action, config),
-    }),
+  const customCommands = parseCommands(
+    requireDir(commandsDirectory, { recurse: true }),
   );
+  commands = [
+    ...customCommands,
+    ...internalCommands.slice(config.withEnvironment ? 0 : 1),
+  ].map(item => ({
+    ...item,
+    ...parseCommand(item.command),
+    action: wrapCommand(item.action, config),
+  }));
   commandsMap = commands.reduce(
     (acc, item) => ({
       ...acc,

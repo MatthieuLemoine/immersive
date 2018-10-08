@@ -16,7 +16,9 @@ export const addEntry = (command) => {
 export const getPreviousEntry = () => {
   const config = getConfig();
   const currentHistory = config.get('history', []);
-  historyIndex = historyIndex >= currentHistory.length ? currentHistory.length : historyIndex + 1;
+  historyIndex = historyIndex >= currentHistory.length
+    ? currentHistory.length
+    : historyIndex + 1;
   return currentHistory[currentHistory.length - historyIndex];
 };
 

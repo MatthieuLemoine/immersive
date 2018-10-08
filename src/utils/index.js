@@ -3,7 +3,9 @@ import { compose, reduce, entries } from 'conductor';
 export const mergeExport = mainExport => compose(
   reduce((acc, [key, handler]) => {
     if (acc[key]) {
-      throw new Error(`${acc} already has a ${key} property. Please find another name.`);
+      throw new Error(
+        `${acc} already has a ${key} property. Please find another name.`,
+      );
     }
     acc[key] = handler;
     return acc;
@@ -17,7 +19,9 @@ export const parseCommand = (cmd) => {
   const index = extraSpacesStrippedCommand.search(bregex);
   const parsedCommand = {
     cmd:
-      index > -1 ? extraSpacesStrippedCommand.slice(0, index).trim() : extraSpacesStrippedCommand,
+      index > -1
+        ? extraSpacesStrippedCommand.slice(0, index).trim()
+        : extraSpacesStrippedCommand,
     demanded: [],
     optional: [],
   };

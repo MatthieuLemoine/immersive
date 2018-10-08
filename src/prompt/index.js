@@ -86,9 +86,9 @@ function getPrefix() {
   const symbol = config.get('symbol');
   const env = getEnvironment(colors);
   const promptColor = chalk[colors.prompt];
-  return `${promptColor(`${user}`)}${env ? `${promptColor(':')}${env}` : ''} ${chalk[colors.prompt](
-    symbol,
-  )}`;
+  return `${promptColor(`${user}`)}${
+    env ? `${promptColor(':')}${env}` : ''
+  } ${chalk[colors.prompt](symbol)}`;
 }
 
 function getQuestion(text = '') {

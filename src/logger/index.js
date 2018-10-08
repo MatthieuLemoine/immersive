@@ -13,7 +13,9 @@ const { log } = console;
 
 const maxValueSize = 36;
 
-const getTruncatedValue = val => `${val.toString().slice(0, maxValueSize)}${val.length > maxValueSize ? '...' : ''}`;
+const getTruncatedValue = val => `${val.toString().slice(0, maxValueSize)}${
+  val.length > maxValueSize ? '...' : ''
+}`;
 
 const generateTable = (name, columns, rows) => {
   const table = new Table();
