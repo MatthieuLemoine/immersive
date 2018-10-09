@@ -13,9 +13,11 @@ const { log } = console;
 
 const maxValueSize = 36;
 
-const getTruncatedValue = val => `${val.toString().slice(0, maxValueSize)}${
-  val.length > maxValueSize ? '...' : ''
-}`;
+const getTruncatedValue = val => (val
+  ? `${val.toString().slice(0, maxValueSize)}${
+    val.length > maxValueSize ? '...' : ''
+  }`
+  : '');
 
 const generateTable = (name, columns, rows) => {
   const table = new Table();
@@ -57,7 +59,7 @@ const table = ({ rows, name }) => {
         return false;
       }
       const val = row[column];
-      if (val.length > maxValueSize) {
+      if (val && val.length > maxValueSize) {
         truncateds.push({ key: column, value: val });
       }
       const generated = generateTable(name, [...lastSlice, column], rows);
