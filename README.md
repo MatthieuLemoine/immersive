@@ -13,6 +13,7 @@ A framework to build immersive CLIs & great developer tools.
 - [Enhanced context for commands](https://github.com/MatthieuLemoine/immersive/wiki/Commands#enhanced-context)
 - [Environments management](https://github.com/MatthieuLemoine/immersive/wiki/Environments)
 - [Enhanced REPL](https://github.com/MatthieuLemoine/immersive/wiki/REPL)
+- [Make your own REPL](https://github.com/MatthieuLemoine/immersive/wiki/REPL#make-your-own-repl)
 - [Display tabular data](https://github.com/MatthieuLemoine/immersive/wiki/Logger#table)
 - [Help command](https://github.com/MatthieuLemoine/immersive/wiki/Commands#built-in-commands)
 

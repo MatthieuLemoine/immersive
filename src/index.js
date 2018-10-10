@@ -8,6 +8,7 @@ import { runCommand, loadCommands } from './command';
 import eventHub, { ON_COMMAND, ON_COMMAND_END } from './event-hub';
 import { setCurrentEnvironment, loadEnvironments } from './environment';
 import { mergeExport as merge } from './utils';
+import setupRepl from './command/internals/repl';
 
 const isNotEmptyOrNil = compose(
   not,
@@ -43,6 +44,7 @@ const immersive = (userConfig = {}) => {
   prompt();
 };
 
+export const repl = setupRepl;
 export const mergeExport = merge;
 export default immersive;
-module.exports = merge(immersive)({ mergeExport: merge });
+module.exports = merge(immersive)({ mergeExport: merge, repl: setupRepl });
