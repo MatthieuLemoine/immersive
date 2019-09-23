@@ -39,7 +39,7 @@ export const runCommand = async (command, internal) => {
     if (!found) {
       await commandsMap.help.action(parsed, command);
     } else {
-      await found.action(
+      const result = await found.action(
         {
           ...parsed,
           // Remove command from args
@@ -47,6 +47,9 @@ export const runCommand = async (command, internal) => {
         },
         command,
       );
+      if (!internal) {
+        return result;
+      }
     }
   } catch (e) {
     if (!internal) {
@@ -58,6 +61,7 @@ export const runCommand = async (command, internal) => {
   if (internal) {
     eventHub.emit(ON_COMMAND_END);
   }
+  return null;
 };
 
 const getCommandKey = compose(
