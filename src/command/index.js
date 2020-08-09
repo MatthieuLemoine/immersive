@@ -13,14 +13,13 @@ import parse from 'yargs-parser';
 import requireDir from 'require-dir';
 import { parseCommand } from '../utils';
 import eventHub, { ON_COMMAND_END } from '../event-hub';
-import { injectEnvironment, getCurrentEnvironment } from '../environment';
+import { getCurrentEnvironment, helpersMap } from '../environment';
 import internalCommands from './internals';
 import logger from '../logger';
 import * as history from '../history';
 import { getConfig } from '../config';
 
 let commandsMap = {};
-let helpersMap = {};
 let commands;
 
 export const getCommands = () => commandsMap;
@@ -109,12 +108,7 @@ const wrapCommand = (action, config) => (argv, command) => {
   });
 };
 
-export const loadCommands = ({
-  helpers = {},
-  commandsDirectory,
-  ...config
-}) => {
-  helpersMap = injectEnvironment(config, helpers);
+export const loadCommands = ({ commandsDirectory, ...config }) => {
   const customCommands = parseCommands(
     requireDir(commandsDirectory, { recurse: true }),
   );

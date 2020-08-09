@@ -36,7 +36,10 @@ const immersive = (userConfig = {}) => {
   });
   if (withEnvironment) {
     config.environments = loadEnvironments(config);
-    setCurrentEnvironment(defaultEnvironment || Object.keys(environments)[0]);
+    setCurrentEnvironment(
+      defaultEnvironment || Object.keys(environments)[0],
+      config,
+    );
   }
   loadCommands(config);
   eventHub.on(ON_COMMAND, command => runCommand(command, true));

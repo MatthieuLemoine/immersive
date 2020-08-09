@@ -4,27 +4,12 @@ import {
 
 let environment;
 let environments;
+export const helpersMap = {};
 
 const inject = conf => compose(
   reduce((acc, [key, module]) => ({ ...acc, [key]: module(conf) }), {}),
   entries,
 );
-
-export const injectEnvironment = (config, helpers) => {
-  if (config.withEnvironment) {
-    return compose(
-      reduce(
-        (acc, [env, conf]) => ({
-          ...acc,
-          [env]: inject(conf)(helpers),
-        }),
-        {},
-      ),
-      entries,
-    )(config.environments);
-  }
-  return inject({})(helpers);
-};
 
 export const getCurrentEnvironment = () => environment;
 export const loadEnvironments = (config) => {
@@ -34,6 +19,9 @@ export const loadEnvironments = (config) => {
   );
   return environments;
 };
-export const setCurrentEnvironment = (name) => {
+export const setCurrentEnvironment = (name, config) => {
   environment = environments[name];
+  if (!helpersMap[name]) {
+    helpersMap[name] = inject(environment)(config.helpers);
+  }
 };
