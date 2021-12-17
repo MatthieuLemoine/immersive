@@ -15,7 +15,7 @@ const isNotEmptyOrNil = compose(
   converge(or, [isNil, isEmpty]),
 );
 
-const immersive = (userConfig = {}) => {
+function immersive(userConfig = {}) {
   const {
     environments,
     defaultEnvironment,
@@ -45,9 +45,8 @@ const immersive = (userConfig = {}) => {
   eventHub.on(ON_COMMAND, command => runCommand(command, true));
   eventHub.on(ON_COMMAND_END, () => prompt());
   prompt();
-};
+}
 
 export const repl = setupRepl;
 export const mergeExport = merge;
 export default immersive;
-module.exports = merge(immersive)({ mergeExport: merge, repl: setupRepl });
