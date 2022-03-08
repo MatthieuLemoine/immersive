@@ -9,7 +9,7 @@ export const action = ({ command: cmd, logger, commands }) => {
   }
   logger.log(
     commands.reduce(
-      (message, item) => `${message}\n  • ${item.command} : ${item.description}`,
+      (message, item) => `${message}\n  • ${chalk.bold(item.command)}: ${item.description}`,
       chalk.green('Available commands:'),
     ),
   );

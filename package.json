@@ -1,6 +1,6 @@
 {
   "name": "immersive",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "A framework to build immersive CLIs & great developer tools.",
   "main": "index.js",
   "module": "src/main.js",

@@ -21,13 +21,16 @@ function immersive(userConfig = {}) {
     defaultEnvironment,
     projectName,
     displayName,
+    disableBanner = false,
   } = userConfig;
   if (!projectName) {
     throw new Error('projectName is required in immersive options.');
   }
   const withEnvironment = isNotEmptyOrNil(environments);
   const config = { ...userConfig, withEnvironment };
-  writeLine(figlet.textSync(displayName || projectName));
+  if (!disableBanner) {
+    writeLine(figlet.textSync(displayName || projectName));
+  }
   loadConfig({
     defaults: isNotEmptyOrNil(config.defaultConfig)
       ? config.defaultConfig
