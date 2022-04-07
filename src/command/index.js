@@ -105,6 +105,7 @@ const wrapCommand = (action, config) => (argv, command) => {
     immersiveConfig: config,
     config: getConfig(),
     env: env ? env.name : null,
+    envConfig: env,
   });
 };
 
