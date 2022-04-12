@@ -9,7 +9,12 @@
   },
   "rules": {
     "no-underscore-dangle": 0,
-    "no-use-before-define": ["error", { "functions": false, "classes": true, "variables": true }],
-    "max-len": 0
+    "no-use-before-define": [
+      "error",
+      { "functions": false, "classes": true, "variables": true }
+    ],
+    "max-len": 0,
+    "no-restricted-syntax": 0,
+    "no-await-in-loop": 0
   }
 }

@@ -1,15 +1,16 @@
-import {
-  compose, entries, reduce, map,
-} from 'conductor';
+import { map } from 'conductor';
 
 let environment;
 let environments;
 export const helpersMap = {};
 
-const inject = conf => compose(
-  reduce((acc, [key, module]) => ({ ...acc, [key]: module(conf) }), {}),
-  entries,
-);
+const inject = async (conf, helpers) => {
+  const acc = {};
+  for (const [helperName, getHelper] of Object.entries(helpers)) {
+    acc[helperName] = await getHelper(conf);
+  }
+  return acc;
+};
 
 export const getCurrentEnvironment = () => environment;
 export const loadEnvironments = (config) => {
@@ -19,9 +20,9 @@ export const loadEnvironments = (config) => {
   );
   return environments;
 };
-export const setCurrentEnvironment = (name, config) => {
+export const setCurrentEnvironment = async (name, config) => {
   environment = environments[name];
   if (!helpersMap[name]) {
-    helpersMap[name] = inject(environment)(config.helpers);
+    helpersMap[name] = await inject(environment, config.helpers);
   }
 };

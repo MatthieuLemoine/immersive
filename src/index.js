@@ -15,7 +15,7 @@ const isNotEmptyOrNil = compose(
   converge(or, [isNil, isEmpty]),
 );
 
-function immersive(userConfig = {}) {
+async function immersive(userConfig = {}) {
   const {
     environments,
     defaultEnvironment,
@@ -39,7 +39,7 @@ function immersive(userConfig = {}) {
   });
   if (withEnvironment) {
     config.environments = loadEnvironments(config);
-    setCurrentEnvironment(
+    await setCurrentEnvironment(
       defaultEnvironment || Object.keys(environments)[0],
       config,
     );
