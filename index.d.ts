@@ -15,10 +15,17 @@ declare module 'immersive' {
     };
   }
 
+  export interface ImmersiveCommand {
+    command: string;
+    description: string;
+    action: Function;
+  }
+
   interface ImmersiveConfiguration {
     projectName: string;
     displayName?: string;
-    commandsDirectory: string;
+    commands?: Record<string, ImmersiveCommand>;
+    commandsDirectory?: string;
     helpers: Record<string, Helper>;
     environments: Record<string, ImmersiveEnvironment>;
     defaultEnvironment?: string;
@@ -53,7 +60,11 @@ declare module 'immersive' {
     clearHistory: () => void;
   }
 
-  type ImmersiveActionInput<Helpers, EnvironmentNames = string, EnvironmentConfig = ImmersiveEnvironment> = Helpers & {
+  type ImmersiveActionInput<
+    Helpers,
+    EnvironmentNames = string,
+    EnvironmentConfig = ImmersiveEnvironment
+  > = Helpers & {
     args: Arguments;
     commands: Record<string, ImmersiveAction<Helpers, EnvironmentNames>>;
     logger: ImmersiveLogger;
@@ -66,8 +77,17 @@ declare module 'immersive' {
     envConfig: EnvironmentConfig;
   };
 
-  type ImmersiveAction<Helpers, EnvironmentNames = string, EnvironmentConfig = ImmersiveEnvironment, ReturnType = any> = (
-    actionInput: ImmersiveActionInput<Helpers, EnvironmentNames, EnvironmentConfig>,
+  type ImmersiveAction<
+    Helpers,
+    EnvironmentNames = string,
+    EnvironmentConfig = ImmersiveEnvironment,
+    ReturnType = any
+  > = (
+    actionInput: ImmersiveActionInput<
+      Helpers,
+      EnvironmentNames,
+      EnvironmentConfig
+    >,
   ) => ReturnType;
 
   export default function immersive(

@@ -109,9 +109,13 @@ const wrapCommand = (action, config) => (argv, command) => {
   });
 };
 
-export const loadCommands = ({ commandsDirectory, ...config }) => {
+export const loadCommands = ({
+  commands: userLoadedCommands,
+  commandsDirectory,
+  ...config
+}) => {
   const customCommands = parseCommands(
-    requireDir(commandsDirectory, { recurse: true }),
+    userLoadedCommands || requireDir(commandsDirectory, { recurse: true }),
   );
   commands = [
     ...customCommands,

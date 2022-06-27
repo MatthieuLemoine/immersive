@@ -35,7 +35,15 @@ const config = {
   projectName: 'Immersive',
   // Will be displayed on CLI start (optional - default to displayName)
   displayName: 'Immersive',
-  // Path to the directory where commands are defined (required)
+  // Loaded commands (required if commandsDirectory not provided) - Should be valid map of ImmersiveCommand
+  commands: {
+    'import-orgs': {
+      command: 'importOrgs',
+      description: 'Import organizations',
+      action: () => {},
+    },
+  },
+  // Path to the directory where commands are defined (required if commands not provided)
   commandsDirectory: path.join(__dirname, 'commands'),
   // Will be accessible from commands as argument (optional)
   helpers: {
