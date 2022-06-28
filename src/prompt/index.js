@@ -1,12 +1,12 @@
-import { unapply, compose } from 'ramda';
-import { join, flip, concat } from 'conductor';
-import chalk from 'chalk';
-import readline from 'readline';
-import eventHub, { ON_COMMAND } from '../event-hub';
-import { getCurrentEnvironment } from '../environment';
-import { getConfig } from '../config';
-import { getNextEntry, getPreviousEntry } from '../history';
-import autocomplete from '../autocomplete';
+const { unapply, compose } = require('ramda');
+const { join, flip, concat } = require('conductor');
+const chalk = require('chalk');
+const readline = require('readline');
+const { ON_COMMAND, eventHub } = require('../event-hub');
+const { getCurrentEnvironment } = require('../environment');
+const { getConfig } = require('../config');
+const { getNextEntry, getPreviousEntry } = require('../history');
+const autocomplete = require('../autocomplete');
 
 const append = flip(concat);
 const writer = process.stdout.write.bind(process.stdout);
@@ -25,25 +25,25 @@ process.stdin.on('keypress', (_, event) => {
 
 const format = unapply(join(' '));
 
-export const write = compose(
+const write = compose(
   writer,
   format,
 );
 
-export const writeLine = compose(
+const writeLine = compose(
   write,
   append('\n'),
   format,
 );
 
-export function prompt() {
+function prompt() {
   isInPrompt = true;
   rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
     completer: autocomplete,
   });
-  rl.question(getQuestion(), (command) => {
+  rl.question(getQuestion(), command => {
     isInPrompt = false;
     rl.pause();
     rl.close();
@@ -94,3 +94,9 @@ function getPrefix() {
 function getQuestion(text = '') {
   return `${getPrefix()} ${text}`;
 }
+
+module.exports = {
+  write,
+  writeLine,
+  prompt,
+};

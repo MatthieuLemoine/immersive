@@ -1,8 +1,14 @@
-import { omit } from 'ramda';
+const { omit } = require('ramda');
 
-export const command = 'config list';
-export const description = 'Display configuration';
+const command = 'config list';
+const description = 'Display configuration';
 
-export const action = ({ config, logger }) => {
+const action = ({ config, logger }) => {
   logger.log(omit(['history'], config.store));
+};
+
+module.exports = {
+  command,
+  description,
+  action,
 };

@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
-import chalk from 'chalk';
-import Table from 'cli-table3';
-import { isNil } from 'ramda';
+const chalk = require('chalk');
+const Table = require('cli-table3');
+const { isNil } = require('ramda');
 
-const getLogger = (level, colorizer, logger) => (...[arg, ...args]) => logger(`${colorizer(`[${level}]`)}: ${arg}`, ...args);
+const getLogger = (level, colorizer, logger) => (...[arg, ...args]) =>
+  logger(`${colorizer(`[${level}]`)}: ${arg}`, ...args);
 
 const error = getLogger('error', chalk.red, console.error);
 const warn = getLogger('warn', chalk.yellow, console.warn);
@@ -13,11 +14,12 @@ const { log } = console;
 
 const maxValueSize = 36;
 
-const getTruncatedValue = val => (val
-  ? `${val.toString().slice(0, maxValueSize)}${
-    val.length > maxValueSize ? '...' : ''
-  }`
-  : '');
+const getTruncatedValue = val =>
+  val
+    ? `${val.toString().slice(0, maxValueSize)}${
+        val.length > maxValueSize ? '...' : ''
+      }`
+    : '';
 
 const generateTable = (name, columns, rows) => {
   const table = new Table();
@@ -54,7 +56,7 @@ const table = ({ rows, name }) => {
   ];
   const slicedColumns = columns.reduce((acc, column) => {
     const lastSlice = acc[acc.length - 1];
-    const addToSlice = rows.every((row) => {
+    const addToSlice = rows.every(row => {
       if (!lastSlice) {
         return false;
       }
@@ -75,11 +77,13 @@ const table = ({ rows, name }) => {
     return [...acc, [column]];
   }, []);
   slicedColumns.forEach(cols => log(generateTable(name, cols, rows)));
-  truncateds.forEach(truncated => log(`${chalk.blue(truncated.key)}: ${truncated.value}`));
+  truncateds.forEach(truncated =>
+    log(`${chalk.blue(truncated.key)}: ${truncated.value}`),
+  );
   log('');
 };
 
-export default {
+module.exports = {
   error,
   warn,
   info,

@@ -1,10 +1,10 @@
-import Conf from 'conf';
+const Conf = require('conf');
 
 let config;
 
-export const getConfig = () => config;
+const getConfig = () => config;
 
-export const loadConfig = ({
+const loadConfig = ({
   defaults = {
     user: 'immersive',
     symbol: '>',
@@ -19,4 +19,9 @@ export const loadConfig = ({
     projectName,
   });
   return config;
+};
+
+module.exports = {
+  getConfig,
+  loadConfig,
 };

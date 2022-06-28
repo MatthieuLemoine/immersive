@@ -28,7 +28,7 @@ npm install immersive
 ## Usage
 
 ```javascript
-import immersive from 'immersive';
+const immersive = require('immersive');
 
 const config = {
   // Application name used for config persistence (required)

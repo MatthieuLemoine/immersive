@@ -1,5 +1,12 @@
-import { setCurrentEnvironment } from '../../environment';
+const { setCurrentEnvironment } = require('../../environment');
 
-export const command = 'env [environment]';
-export const description = 'Switch environment';
-export const action = ({ args, immersiveConfig }) => setCurrentEnvironment(args._[0], immersiveConfig);
+const command = 'env [environment]';
+const description = 'Switch environment';
+const action = ({ args, immersiveConfig }) =>
+  setCurrentEnvironment(args._[0], immersiveConfig);
+
+module.exports = {
+  command,
+  description,
+  action,
+};

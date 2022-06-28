@@ -1,20 +1,9 @@
 {
-  "extends": ["airbnb-base"],
-  "parserOptions": {
-    "ecmaVersion": 9
-  },
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "env": {
     "jest": true,
-    "node": true
+    "node": true,
+    "es2022": true
   },
-  "rules": {
-    "no-underscore-dangle": 0,
-    "no-use-before-define": [
-      "error",
-      { "functions": false, "classes": true, "variables": true }
-    ],
-    "max-len": 0,
-    "no-restricted-syntax": 0,
-    "no-await-in-loop": 0
-  }
+  "rules": {}
 }

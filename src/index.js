@@ -1,14 +1,12 @@
-import figlet from 'figlet';
-import {
-  compose, converge, isNil, isEmpty, or, not,
-} from 'ramda';
-import { loadConfig } from './config';
-import { writeLine, prompt } from './prompt';
-import { runCommand, loadCommands } from './command';
-import eventHub, { ON_COMMAND, ON_COMMAND_END } from './event-hub';
-import { setCurrentEnvironment, loadEnvironments } from './environment';
-import { mergeExport as merge } from './utils';
-import setupRepl from './command/internals/repl';
+const figlet = require('figlet');
+const { compose, converge, isNil, isEmpty, or, not } = require('ramda');
+const { loadConfig } = require('./config');
+const { writeLine, prompt } = require('./prompt');
+const { runCommand, loadCommands } = require('./command');
+const { ON_COMMAND, ON_COMMAND_END, eventHub } = require('./event-hub');
+const { setCurrentEnvironment, loadEnvironments } = require('./environment');
+const { mergeExport: merge } = require('./utils');
+const { setupReplServer } = require('./command/internals/repl');
 
 const isNotEmptyOrNil = compose(
   not,
@@ -50,6 +48,8 @@ async function immersive(userConfig = {}) {
   prompt();
 }
 
-export const repl = setupRepl;
-export const mergeExport = merge;
-export default immersive;
+module.exports = {
+  immersive,
+  repl: setupReplServer,
+  mergeExport: merge,
+};

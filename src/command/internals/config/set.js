@@ -1,9 +1,9 @@
-import chalk from 'chalk';
+const chalk = require('chalk');
 
-export const command = 'config set <key> <value>';
-export const description = 'Update config';
+const command = 'config set <key> <value>';
+const description = 'Update config';
 
-export const action = ({ args, config, logger }) => {
+const action = ({ args, config, logger }) => {
   const [key, value] = args._;
   if (key === 'colors.prompt' && !chalk[value]) {
     logger.error('Color not supported by chalk');
@@ -11,4 +11,10 @@ export const action = ({ args, config, logger }) => {
   }
   config.set(key, value);
   logger.info('Updated');
+};
+
+module.exports = {
+  command,
+  description,
+  action,
 };

@@ -18,7 +18,7 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-import * as acorn from 'acorn';
+const acorn = require('acorn');
 
 const { tokTypes: tt } = acorn;
 
@@ -45,35 +45,37 @@ function isRecoverableError(e, code) {
   //       change these messages in the future, this will lead to a test
   //       failure, indicating that this code needs to be updated.
   //
-  acorn.plugins.replRecoverable = (parser) => {
+  acorn.plugins.replRecoverable = parser => {
     parser.extend(
       'nextToken',
-      nextToken => function onNextToken() {
-        Reflect.apply(nextToken, this, []);
+      nextToken =>
+        function onNextToken() {
+          Reflect.apply(nextToken, this, []);
 
-        if (this.type === tt.eof) recoverable = true;
-      },
+          if (this.type === tt.eof) recoverable = true;
+        },
     );
 
     parser.extend(
       'raise',
-      raise => function onRaise(pos, message) {
-        switch (message) {
-          case 'Unterminated template':
-          case 'Unterminated comment':
-            recoverable = true;
-            break;
-          case 'Unterminated string constant': {
-            const token = this.input.slice(this.lastTokStart, this.pos);
-            // see https://www.ecma-international.org/ecma-262/#sec-line-terminators
-            recoverable = /\\(?:\r\n?|\n|\u2028|\u2029)$/.test(token);
-            break;
+      raise =>
+        function onRaise(pos, message) {
+          switch (message) {
+            case 'Unterminated template':
+            case 'Unterminated comment':
+              recoverable = true;
+              break;
+            case 'Unterminated string constant': {
+              const token = this.input.slice(this.lastTokStart, this.pos);
+              // see https://www.ecma-international.org/ecma-262/#sec-line-terminators
+              recoverable = /\\(?:\r\n?|\n|\u2028|\u2029)$/.test(token);
+              break;
+            }
+            default:
           }
-          default:
-        }
 
-        Reflect.apply(raise, this, [pos, message]);
-      },
+          Reflect.apply(raise, this, [pos, message]);
+        },
     );
   };
 
@@ -97,4 +99,4 @@ function isRecoverableError(e, code) {
   }
 }
 
-export default isRecoverableError;
+module.exports = isRecoverableError;

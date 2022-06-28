@@ -1,5 +1,5 @@
 declare module 'immersive' {
-  import { Context } from 'node:vm';
+  const { Context } = require('node:vm');
   interface ImmersiveEnvironment extends Record<string, any> {}
   interface ImmersiveEnvironmentConfig extends ImmersiveEnvironment {
     name: string;
@@ -90,9 +90,7 @@ declare module 'immersive' {
     >,
   ) => ReturnType;
 
-  export default function immersive(
-    configuration: ImmersiveConfiguration,
-  ): void;
+  export function immersive(configuration: ImmersiveConfiguration): void;
 
   export function repl(context: Context, customEval: any): Promise<void>;
   export function mergeExport<

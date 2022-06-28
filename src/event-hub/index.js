@@ -1,8 +1,12 @@
-import EventEmitter from 'events';
+const EventEmitter = require('events');
 
-export const ON_COMMAND = 'ON_COMMAND';
-export const ON_COMMAND_END = 'ON_COMMAND_END';
+const ON_COMMAND = 'ON_COMMAND';
+const ON_COMMAND_END = 'ON_COMMAND_END';
 
 const eventHub = new EventEmitter();
 
-export default eventHub;
+module.exports = {
+  ON_COMMAND,
+  ON_COMMAND_END,
+  eventHub,
+};

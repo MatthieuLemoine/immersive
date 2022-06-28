@@ -19,17 +19,17 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* eslint-disable no-param-reassign, no-continue, no-constant-condition */
-import vm from 'vm';
-import { inherits } from 'util';
-import processTopLevelAwait from './await';
-import isRecoverableError from './recoverable';
+const vm = require('vm');
+const { inherits } = require('util');
+const processTopLevelAwait = require('./await');
+const isRecoverableError = require('./recoverable');
 
 const savedRegExMatches = ['', '', '', '', '', '', '', '', '', ''];
 const sep = '\u0000\u0000\u0000';
 const regExMatcher = new RegExp(
-  `^${sep}(.*)${sep}(.*)${sep}(.*)${sep}(.*)`
-    + `${sep}(.*)${sep}(.*)${sep}(.*)${sep}(.*)`
-    + `${sep}(.*)$`,
+  `^${sep}(.*)${sep}(.*)${sep}(.*)${sep}(.*)` +
+    `${sep}(.*)${sep}(.*)${sep}(.*)${sep}(.*)` +
+    `${sep}(.*)$`,
 );
 
 function Recoverable(err) {
@@ -37,7 +37,7 @@ function Recoverable(err) {
 }
 inherits(Recoverable, SyntaxError);
 
-export default (code, context, file, cb) => {
+module.exports = (code, context, file, cb) => {
   let err;
   let result;
   let script;
@@ -132,10 +132,10 @@ export default (code, context, file, cb) => {
       const promise = result;
 
       promise.then(
-        (data) => {
+        data => {
           finishExecution(undefined, data);
         },
-        (error) => {
+        error => {
           if (err && process.domain) {
             process.domain.emit('error', error);
             process.domain.exit();

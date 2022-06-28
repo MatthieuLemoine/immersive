@@ -1,4 +1,4 @@
-import {
+const {
   compose,
   slice,
   head,
@@ -8,23 +8,23 @@ import {
   values,
   reduce,
   join,
-} from 'conductor';
-import parse from 'yargs-parser';
-import requireDir from 'require-dir';
-import { parseCommand } from '../utils';
-import eventHub, { ON_COMMAND_END } from '../event-hub';
-import { getCurrentEnvironment, helpersMap } from '../environment';
-import internalCommands from './internals';
-import logger from '../logger';
-import * as history from '../history';
-import { getConfig } from '../config';
+} = require('conductor');
+const parse = require('yargs-parser');
+const requireDir = require('require-dir');
+const { parseCommand } = require('../utils');
+const { ON_COMMAND_END, eventHub } = require('../event-hub');
+const { getCurrentEnvironment, helpersMap } = require('../environment');
+const internalCommands = require('./internals');
+const logger = require('../logger');
+const history = require('../history');
+const { getConfig } = require('../config');
 
 let commandsMap = {};
 let commands;
 
-export const getCommands = () => commandsMap;
+const getCommands = () => commandsMap;
 
-export const runCommand = async (command, internal) => {
+const runCommand = async (command, internal) => {
   const parsed = parse(command, { configuration: { 'parse-numbers': false } });
   let found;
   let index = 0;
@@ -109,7 +109,7 @@ const wrapCommand = (action, config) => (argv, command) => {
   });
 };
 
-export const loadCommands = ({
+const loadCommands = ({
   commands: userLoadedCommands,
   commandsDirectory,
   ...config
@@ -140,3 +140,9 @@ function getHelpers(env) {
   }
   return helpersMap;
 }
+
+module.exports = {
+  getCommands,
+  runCommand,
+  loadCommands,
+};

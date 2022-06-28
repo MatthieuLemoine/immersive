@@ -19,8 +19,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* eslint-disable no-param-reassign */
-import { parse } from 'acorn';
-import * as walk from 'acorn-walk';
+const { parse } = require('acorn');
+const walk = require('acorn-walk');
 
 const noop = () => {};
 const visitorsWithoutAncestors = {
@@ -46,15 +46,15 @@ const visitorsWithoutAncestors = {
   },
   VariableDeclaration(node, state, c) {
     if (
-      node.kind === 'var'
-      || state.ancestors[state.ancestors.length - 2] === state.body
+      node.kind === 'var' ||
+      state.ancestors[state.ancestors.length - 2] === state.body
     ) {
       if (node.declarations.length === 1) {
         state.replace(node.start, node.start + node.kind.length, 'void');
       } else {
         state.replace(node.start, node.start + node.kind.length, 'void (');
       }
-      node.declarations.forEach((decl) => {
+      node.declarations.forEach(decl => {
         state.prepend(decl, '(');
         state.append(decl, decl.init ? ')' : '=undefined)');
       });
@@ -69,7 +69,7 @@ const visitorsWithoutAncestors = {
 };
 
 const visitors = {};
-Object.keys(walk.base).forEach((nodeType) => {
+Object.keys(walk.base).forEach(nodeType => {
   const callback = visitorsWithoutAncestors[nodeType] || walk.base[nodeType];
   visitors[nodeType] = (node, state, c) => {
     const isNew = node !== state.ancestors[state.ancestors.length - 1];
@@ -143,4 +143,4 @@ function processTopLevelAwait(src) {
   return wrappedArray.join('');
 }
 
-export default processTopLevelAwait;
+module.exports = processTopLevelAwait;
