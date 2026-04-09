@@ -1,6 +1,6 @@
 {
   "name": "immersive",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A framework to build immersive CLIs & great developer tools.",
   "main": "src/index.js",
   "repository": "https://github.com/MatthieuLemoine/immersive",
@@ -13,6 +13,7 @@
     "cli-table3": "^0.5.1",
     "conductor": "^1.4.1",
     "conf": "^2.0.0",
+    "env-paths": "^2.2.1",
     "figlet": "^1.2.0",
     "ramda": "^0.25.0",
     "require-dir": "^1.1.0",
