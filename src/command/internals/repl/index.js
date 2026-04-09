@@ -1,5 +1,7 @@
 const repl = require('repl');
 const defaultEval = require('./eval');
+const envPaths = require('env-paths');
+const path = require('path');
 
 const command = 'repl';
 const description = 'Lauch a REPL session in a command context';
@@ -24,6 +26,14 @@ const setupReplServer = (context, customEval) =>
       }),
     );
     replServer.on('exit', resolve);
+    // Setup history
+    const paths = envPaths(context.immersiveConfig.projectName);
+    const historyFilePath = path.join(paths.config, '.repl-history');
+    replServer.setupHistory(historyFilePath, err => {
+      if (err) {
+        context.logger.error(err);
+      }
+    });
   });
 
 const action = context => setupReplServer(context, awaitEval);
